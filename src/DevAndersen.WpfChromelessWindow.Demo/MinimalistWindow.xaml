@@ -1,0 +1,17 @@
+﻿<clw:ChromelessWindow x:Class="DevAndersen.WpfChromelessWindow.Demo.MinimalistWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:clw="clr-namespace:DevAndersen.WpfChromelessWindow;assembly=DevAndersen.WpfChromelessWindow"
+        xmlns:local="clr-namespace:DevAndersen.WpfChromelessWindow.Demo"
+        mc:Ignorable="d"
+        Title="Minimalist Window" Height="450" Width="800">
+    <Border BorderBrush="Red" BorderThickness="1">
+        <StackPanel>
+            <TextBlock TextWrapping="Wrap" Foreground="Green" Margin="10">Take note of the red border around this window. When the window is maximized, it will correctly fill out the screen's working area, rather than expand beyond of the screen's boundaries.</TextBlock>
+            <Button Name="BtnToggle" Click="BtnToggle_Click" HorizontalAlignment="Center" Padding="4" Margin="0,0,0,20">Toggle resizable/maximized</Button>
+            <local:DemoUserControl/>
+        </StackPanel>
+    </Border>
+</clw:ChromelessWindow>
