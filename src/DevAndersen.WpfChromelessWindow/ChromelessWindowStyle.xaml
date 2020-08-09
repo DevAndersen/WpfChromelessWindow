@@ -5,13 +5,13 @@
         <Setter Property="WindowStyle" Value="None"/>
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
-                <WindowChrome ResizeBorderThickness="{Binding DynamicMargin}" CaptionHeight="{Binding WindowTitleHeight}" GlassFrameThickness="0" CornerRadius="0"/>
+                <WindowChrome ResizeBorderThickness="{Binding ResizeBorderThickness}" CaptionHeight="{Binding WindowTitleHeight}" GlassFrameThickness="0" CornerRadius="0"/>
             </Setter.Value>
         </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Window">
-                    <Border x:Name="DynamicMarginDetector" Background="White" SnapsToDevicePixels="true">
+                    <Border x:Name="DynamicMarginDetector" Background="{Binding Window.Background}" SnapsToDevicePixels="true">
                         <ContentPresenter Margin="{Binding DynamicMargin}" Content="{TemplateBinding Content}"/>
                     </Border>
                 </ControlTemplate>

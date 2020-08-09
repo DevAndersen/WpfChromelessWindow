@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
+using System.Windows.Media;
 
 namespace DevAndersen.WpfChromelessWindow
 {
@@ -13,70 +13,72 @@ namespace DevAndersen.WpfChromelessWindow
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public double WindowTitleHeight => window.WindowTitleHeight;
+        /// <summary>
+        /// The height of the window title bar.
+        /// </summary>
+        public virtual double WindowTitleHeight => Window.WindowTitleHeight - ResizeBorderThickness.Top;
 
         /// <summary>
         /// The thickness of the dynamic margin, which ensures that the proper actual window region fits correctly within the current screen's working area.
         /// </summary>
-        public Thickness DynamicMargin
-        {
-            get
-            {
-                return window.WindowState switch
-                {
-                    WindowState.Maximized => GetMaximizedMarginThickness(),
-                    _ => new Thickness(0),
-                };
-            }
-        }
+        public virtual Thickness DynamicMargin => Window.WindowState == WindowState.Maximized ? GetMaximizedMarginThickness() : new Thickness(0);
 
+        /// <summary>
+        /// The thickness of the area around the window that allows you to resize it.
+        /// </summary>
         public virtual Thickness ResizeBorderThickness => new Thickness(5);
 
-        private readonly ChromelessWindow window;
+        /// <summary>
+        /// The window that the view model is associated with.
+        /// Used for accessing and manipulating the window in view model, and for accessing window properties from XAML.
+        /// </summary>
+        public ChromelessWindow Window { get; private set; }
 
         public ChromelessWindowViewModel(ChromelessWindow window)
         {
-            this.window = window;
+            Window = window;
         }
 
         /// <summary>
-        /// Figures out the correct thickness, for the dynamic margin, that will make the window content fit correctly within the screen's working area.
+        /// Figures out the correct thickness for the dynamic margin, that will make the window content fit correctly within the screen's working area.
         /// </summary>
         /// <returns></returns>
-        private Thickness GetMaximizedMarginThickness()
+        public Thickness GetMaximizedMarginThickness()
         {
-            Border dynamicMarginDetector = (Border)window.Template.FindName("DynamicMarginDetector", window);
-            Point topLeftCorner = dynamicMarginDetector.PointToScreen(new Point(0, 0));
+            Border dynamicMarginDetector = (Border)Window.Template.FindName("DynamicMarginDetector", Window);
+            System.Drawing.Rectangle area = System.Windows.Forms.Screen.FromHandle(new System.Windows.Interop.WindowInteropHelper(Window).Handle).WorkingArea;
+            Point detectorCorner = dynamicMarginDetector.PointToScreen(new Point(0, 0));
 
-            System.Drawing.Rectangle area = Screen.FromHandle(new System.Windows.Interop.WindowInteropHelper(window).Handle).WorkingArea;
-
-            PresentationSource presentationSource = PresentationSource.FromVisual(window);
+            PresentationSource presentationSource = PresentationSource.FromVisual(Window);
             double dpiScaleX = presentationSource.CompositionTarget.TransformToDevice.M11;
             double dpiScaleY = presentationSource.CompositionTarget.TransformToDevice.M22;
 
             double areaRight = area.Width / dpiScaleX;
             double areaBottom = area.Height / dpiScaleY;
+            double offsetX = area.Left - detectorCorner.X;
+            double offsetY = area.Top - detectorCorner.Y;
 
-            double width = dynamicMarginDetector.ActualWidth;
-            double height = dynamicMarginDetector.ActualHeight;
+            double top = offsetX / dpiScaleX;
+            double left = offsetY / dpiScaleY;
+            double right = (dynamicMarginDetector.ActualWidth - offsetX - areaRight) / dpiScaleX;
+            double bottom = (dynamicMarginDetector.ActualHeight - offsetY - areaBottom) / dpiScaleY;
 
-            double left = (area.Left - topLeftCorner.X) / dpiScaleX;
-            double top = (area.Top - topLeftCorner.Y) / dpiScaleY;
-            double right = -(areaRight - area.Left - width + left);
-            double bottom = -(areaBottom - area.Top - height + top);
             return new Thickness(left, top, right, bottom);
         }
 
         /// <summary>
-        /// Updates the dynamic margin.
-        /// Call this method when the window's location or state changes.
+        /// Call this method when the window's location or state changes, in order to update the dynamic margin (or other elements).
         /// </summary>
-        public void WindowUpdate()
+        public virtual void WindowUpdate()
         {
             NotifyPropertyChanged(nameof(DynamicMargin));
         }
 
-        public void NotifyPropertyChanged([CallerMemberName]string propertyName = "")
+        /// <summary>
+        /// <see cref="INotifyPropertyChanged"/> method.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        protected void NotifyPropertyChanged([CallerMemberName]string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

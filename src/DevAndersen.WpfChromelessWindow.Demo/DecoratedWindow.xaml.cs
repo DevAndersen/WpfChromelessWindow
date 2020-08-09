@@ -18,6 +18,8 @@ namespace DevAndersen.WpfChromelessWindow.Demo
         public DecoratedWindow() : base(30)
         {
             InitializeComponent();
+            viewModel = new DecoratedWindowViewModel(this);
+            DataContext = viewModel;
         }
 
         private void BtnMaximize_Click(object sender, RoutedEventArgs e)

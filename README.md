@@ -13,6 +13,11 @@ Note:
 
 For examples of implementation, please see the `DevAndersen.WpfChromelessWindow.Demo` project found in the solution.
 
+Running this project will start out with a simple selection window, where you can choose which of two demos you want to see:
+
+- Minimalist: Contains the bare minimum, plus a 1-pixel wide red border, to show that the window doesn't leak outside of the current screen's boundaries.
+- Decorated: Demonstrates simple implementation of basic window controls, such as a window header with icon/title/minimize-/maximize-/close buttons.
+
 ## Known issues
 
 A shortcoming of this project that is worth mentioning is that the window does not resize to fit the screen when all of the following conditions are met:
@@ -21,4 +26,4 @@ A shortcoming of this project that is worth mentioning is that the window does n
 - The screen it is moved from has the same resolution as the screen is moved to.
 - The Windows taskbar is only visible on one of these two screens.
 
-I was unable to find a way to neatly detect when the aforementioned keyboard shortcut is used, when the screen resolutions are identical.
+I was unable to find a way to neatly detect when the aforementioned keyboard shortcut is used, when both screen resolutions are identical. Any information how to resolve this issue would be very welcome.

@@ -3,9 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30104.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevAndersen.WpfChromelessWindow", "DevAndersen.WpfChromelessWindow\DevAndersen.WpfChromelessWindow.csproj", "{E6FB079F-A142-41C5-958D-19A91B8435C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevAndersen.WpfChromelessWindow", "DevAndersen.WpfChromelessWindow\DevAndersen.WpfChromelessWindow.csproj", "{E6FB079F-A142-41C5-958D-19A91B8435C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevAndersen.WpfChromelessWindow.Demo", "DevAndersen.WpfChromelessWindow.Demo\DevAndersen.WpfChromelessWindow.Demo.csproj", "{574174E8-E636-439E-98F0-63B44A62806B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevAndersen.WpfChromelessWindow.Demo", "DevAndersen.WpfChromelessWindow.Demo\DevAndersen.WpfChromelessWindow.Demo.csproj", "{574174E8-E636-439E-98F0-63B44A62806B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5C017F60-89BA-4C85-90C5-C8D59D42CD00}"
+	ProjectSection(SolutionItems) = preProject
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CE33EADB-AE4E-4A0C-A77A-BBBB46F0C0B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +31,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E6FB079F-A142-41C5-958D-19A91B8435C6} = {CE33EADB-AE4E-4A0C-A77A-BBBB46F0C0B0}
+		{574174E8-E636-439E-98F0-63B44A62806B} = {CE33EADB-AE4E-4A0C-A77A-BBBB46F0C0B0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {205D3152-5034-46C8-8320-9B9314224121}

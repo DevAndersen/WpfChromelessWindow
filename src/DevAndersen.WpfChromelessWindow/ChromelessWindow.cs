@@ -7,13 +7,13 @@ namespace DevAndersen.WpfChromelessWindow
 {
     public class ChromelessWindow : Window
     {
-        protected readonly ChromelessWindowViewModel viewModel;
+        protected ChromelessWindowViewModel viewModel;
 
         /// <summary>
         /// The height of the window's title bar.
         /// This is used to determine how much of the window's top can be used for dragging the window around, toggling resizable/maximized (double-clicking), as well as the right-click context menu.
         /// </summary>
-        public double WindowTitleHeight { get; }
+        public double WindowTitleHeight { get; protected set; }
 
         public ChromelessWindow(double windowTitleHeight) : base()
         {
